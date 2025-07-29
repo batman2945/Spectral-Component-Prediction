@@ -1,4 +1,4 @@
-# 🌈 DeepResAutoencoder: Spectral Data Reconstruction using Residual Autoencoders
+#  DeepResAutoencoder: Spectral Data Reconstruction using Residual Autoencoders
 
 This project implements a deep **residual autoencoder** for unsupervised reconstruction of spectral data using PyTorch. The model is optimized using a **composite loss** that combines MSE, cosine similarity, and spectral smoothness. Visual diagnostics include spectral plots and UMAP latent space projection.
 
