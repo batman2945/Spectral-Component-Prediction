@@ -1,77 +1,44 @@
+DeepResAutoencoder: Spectral Data Reconstruction using Residual Autoencoders
+This project implements a deep residual autoencoder for unsupervised reconstruction of spectral data using PyTorch. The model is optimized using a composite loss that combines MSE, cosine similarity, and spectral smoothness. Visual diagnostics include spectral plots and UMAP latent space projection.
 
-# Spectral Component Prediction using Deep Learning
+🚀 Features
+Residual skip connections for better learning
+Composite loss (MSE + Cosine + Smoothness)
+Mixed-Precision training with AMP (if CUDA available)
+Early stopping & OneCycleLR scheduler
+Spectral reconstruction and residual visualization
+Latent space exploration with UMAP
+📁 Dataset
+Input: 3D spectral dataset ((samples, 61 wavelengths, 4 components))
+Format: .dat file loaded via NumPy
+🧠 Model Architecture
+Input → [512 → 256] → Latent (128-d) → [256 → 512] → Output (+ Residual)
+Activations: SELU
+Normalization: LayerNorm
+Regularization: Dropout (0.2)
+Loss: α*MSE + β*Cosine + γ*Smoothness
+🛠️ Installation
+pip install torch numpy scikit-learn matplotlib umap-learn
+▶️ Run Training
+python train.py
+Where train.py contains:
 
-## 🔍 Overview
-
-This project builds a deep learning model to predict spectral component distributions from structural input data. It focuses on **multi-output regression**, predicting four spectral components (each with 61 values), with special optimization and visualization for **Component 4**, which may be of higher scientific or practical interest.
-
-The model is designed in PyTorch and incorporates:
-- A custom neural architecture with a shared base and specialized heads
-- A **custom loss function** that prioritizes accuracy and correlation, especially for Component 4
-- **Advanced visualization** tools to analyze residuals and model predictions
-- **Mixed precision training**, **OneCycleLR**, and **early stopping**
-
----
-
-## 📁 Files
-
-- `Spectral_Model.ipynb`: Main Jupyter notebook
-- `best_spectral_model.pth`: Saved model with best validation performance
-
----
-
-## 🧠 Model Architecture
-
-- Input: 8 normalized structural features
-- Output: 4 components × 61 spectrum points
-- Architecture:
-  - Shared base: 3 fully connected layers with GELU, BatchNorm, and Dropout
-  - 4 specialized heads for each component
-  - Component 4 head has deeper layers for refined accuracy
-
----
-
-## 🧪 Loss Function
-
-A composite custom loss:
-- **Weighted MSE** for each component
-- **Cosine similarity** to preserve spectral shape
-- **Peak-sensitive error**, especially for Component 4
-
----
-
-## 📊 Visualizations
-
-- Component-wise plots comparing predicted vs actual spectra
-- Residual plots
-- Diagnostics focused on Component 4 across multiple samples
-
----
-
-## ⚙️ How to Run
-
-1. Prepare your data:
-   - `structures_120k.txt` (features)
-   - `spectra_120k.dat` (target spectra)
-
-2. Run the notebook:
-   - It trains the model with monitoring, saves best checkpoint, and visualizes results.
-
-3. Optional:
-   - Load `best_spectral_model.pth` for inference or extended analysis.
-
----
-
-## 🛠️ Libraries Used
-
-- `PyTorch`
-- `scikit-learn`
-- `NumPy`
-- `Matplotlib`
-- `SciPy`
-
----
-
-## 🎯 Goal
-
-To build a high-performance model that accurately learns structural–spectral relationships, with a focused enhancement on **Component 4**, potentially important in materials science or remote sensing tasks.
+Model definition
+Data loading
+Training loop
+Visualizations
+📊 Visualizations
+📉 Training Curves
+MSE loss vs epoch
+Validation tracking with early stopping
+🔬 Spectral Reconstruction
+Original vs Reconstructed vs Residuals
+Per component (4 channels)
+🌌 Latent Space (UMAP)
+2D UMAP embedding from the 128-d latent vector
+📦 Output
+best_deep_res_autoencoder.pth: Saved model with best validation loss
+👨‍💻 Author
+Dharmik Dudhat
+Built using PyTorch + NumPy + Matplotlib
+Feel free to ⭐ this repo and contribute!
