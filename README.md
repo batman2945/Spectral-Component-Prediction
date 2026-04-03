@@ -1,91 +1,88 @@
-#  DeepResAutoencoder: Spectral Data Reconstruction using Residual Autoencoders
+# DeepResAutoencoder (Spectral Data Reconstruction)
 
-This project implements a deep **residual autoencoder** for unsupervised reconstruction of spectral data using PyTorch. The model is optimized using a **composite loss** that combines MSE, cosine similarity, and spectral smoothness. Visual diagnostics include spectral plots and UMAP latent space projection.
-
----
-
-## 🚀 Features
-
-- Residual skip connections for better learning
-- Composite loss (MSE + Cosine + Smoothness)
-- Mixed-Precision training with AMP (if CUDA available)
-- Early stopping & OneCycleLR scheduler
-- Spectral reconstruction and residual visualization
-- Latent space exploration with UMAP
+This project focuses on reconstructing high-dimensional spectral data using a deep residual autoencoder built with PyTorch. It is based on unsupervised learning and explores how well the model can learn meaningful representations from spectral inputs.
 
 ---
 
-## 📁 Dataset
+## What I did
 
-- Input: 3D spectral dataset (`(samples, 61 wavelengths, 4 components)`)
-- Format: `.dat` file loaded via NumPy
+* Built a residual autoencoder for spectral data reconstruction
+* Used a combination of losses (MSE, cosine similarity, smoothness)
+* Added residual connections to improve learning
+* Visualized reconstruction and latent space using UMAP
 
 ---
 
-## 🧠 Model Architecture
+## Dataset
+
+* Shape: `(samples, 61 wavelengths, 4 components)`
+* Loaded using NumPy from `.dat` file
+
+---
+
+## Model
+
+Basic structure:
 
 ```
-Input → [512 → 256] → Latent (128-d) → [256 → 512] → Output (+ Residual)
+Input → Encoder → Latent → Decoder → Output
 ```
 
-- Activations: SELU  
-- Normalization: LayerNorm  
-- Regularization: Dropout (0.2)  
-- Loss: `α*MSE + β*Cosine + γ*Smoothness`
+* Latent size: 128
+* Activation: SELU
+* Dropout: 0.2
+* Normalization: LayerNorm
 
 ---
 
-## 🛠️ Installation
+## Training
 
-```bash
-pip install torch numpy scikit-learn matplotlib umap-learn
-```
+* Optimizer with learning rate scheduling (OneCycleLR)
+* Early stopping based on validation loss
+* Mixed precision training (if GPU available)
 
----
-
-## ▶️ Run Training
+Run:
 
 ```bash
 python train.py
 ```
 
-Where `train.py` contains:
-- Model definition
-- Data loading
-- Training loop
-- Visualizations
+---
+
+## Results
+
+* Compared original vs reconstructed spectra
+* Checked residual errors
+* Used UMAP to visualize latent space
 
 ---
 
-## 📊 Visualizations
+## Output
 
-### 📉 Training Curves
-- MSE loss vs epoch  
-- Validation tracking with early stopping
-
-### 🔬 Spectral Reconstruction
-- Original vs Reconstructed vs Residuals  
-- Per component (4 channels)
-
-### 🌌 Latent Space (UMAP)
-- 2D UMAP embedding from the 128-d latent vector
+* Saved model: `best_deep_res_autoencoder.pth`
 
 ---
 
-## 📦 Output
+## Tech used
 
-- `best_deep_res_autoencoder.pth`: Saved model with best validation loss
-
----
-
-## 📜 License
-
-MIT License © 2025
+* PyTorch
+* NumPy
+* Matplotlib
+* scikit-learn
+* UMAP
 
 ---
 
-## 👨‍💻 Author
+## Notes
 
-Dharmik Dudhat  
-Built using PyTorch + NumPy + Matplotlib  
-Feel free to ⭐ this repo and contribute!
+This was mainly a learning + experimental project to understand:
+
+* autoencoders
+* high-dimensional data
+* representation learning
+
+---
+
+## Author
+
+Dharmik Dudhat
